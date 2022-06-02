@@ -1,0 +1,69 @@
+{% extends "../base.html" %}
+
+{% block tittle %} Gestion grupos {% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+
+        <h2>Gestión de Grupos</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="/registrarGrupo/" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" id="idGrupo" name="idGrupo" class="form-control" placeholder="Id"
+                            minlength="1" maxlength="6" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="nombreGrupo" name="nombreGrupo" class="form-control"
+                            placeholder="Nombre Grupo" maxlength="50" required>
+                    </div>
+                    <div class="form-group">
+                        <select id="idDocente" name="idDocente" class="form-control" required>
+                            <option value="-1" disabled selected>Seleccione un docente</option>
+                            {% for d in docentes %}                                                                
+                                <option value="{{d.idDocente}}">{{d.nombreDocente}} {{d.apellidoDocente}}</option>                      
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <h1>Listado de Grupos</h1>
+        <div class="table-responsive py-2">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Docente</th>
+                        <th colspan="3">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for g in grupos %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{g.idGrupo}}</td>
+                        <td>{{g.nombreGrupo}}</td>
+                        <td>{{g.idDocente.nombreDocente}} {{g.idDocente.apellidoDocente}}</td>
+                        <td><a href="edicionMateria/{{g.idGrupo}}" class="btn btn-info">Editar</a></td>
+                        <td><a href="eliminarMateria/{{g.idGrupo}}" class="btn btn-danger btnEliminacion">Eliminar</a>
+                        </td>
+                        <td><a href="eliminarMateria/{{g.idGrupo}}" class="btn btn-success">Ver detalle</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

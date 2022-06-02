@@ -13,5 +13,11 @@ urlpatterns = [
     path('registrarDocente/', views.registrarDocente),
     path('eliminarDocente/<idDocente>', views.eliminarDocente),
     path('edicionDocente/<idDocente>', views.edicionDocente),
-    path('editarDocente/', views.editarDocente)
+    path('editarDocente/', views.editarDocente),
+
+    path('grupos',views.grupos),
+    path('registrarGrupo/', views.registrarGrupo),
+    path('eliminarGrupo/<idGrupo>', views.eliminarGrupo),
+    path('edicionGrupo/<idGrupo>', views.edicionGrupo),
+    path('editarGrupo/', views.editarGrupo)
 ]

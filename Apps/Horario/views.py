@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Materia, Docente
+from .models import Materia, Docente, Grupo
 from django.db import IntegrityError
 
 # Create your views here.
@@ -83,3 +83,43 @@ def editarDocente(request):
     docente.save()
 
     return redirect('/docentes')
+
+####################################################################################
+def grupos(request):
+    grupos = Grupo.objects.all()
+    docentes = Docente.objects.all()
+    return render(request, "grupos/gestionGrupos.html", {"grupos":grupos,"docentes":docentes})
+
+def registrarGrupo(request):
+    idGrupo = request.POST['idGrupo']
+    nombreGrupo = request.POST['nombreGrupo']
+    idDocente = request.POST['idDocente']
+
+    try:
+        grupo = Grupo.objects.create(
+            idGrupo=idGrupo, nombreGrupo=nombreGrupo, idDocente=idDocente)
+    except IntegrityError:
+        return redirect('/grupos')
+    return redirect('/grupos')
+
+def eliminarGrupo(request, idGrupo):
+    docente = Grupo.objects.get(idGrupo=idGrupo)
+    docente.delete()
+
+    return redirect('/grupos')
+
+def edicionGrupo(request, idGrupo):
+    docente = Grupo.objects.get(idGrupo=idGrupo)
+    return render(request, "grupos/edicionGrupos.html", {"docente": docente})
+
+def editarGrupo(request):
+    idGrupo = request.POST['idGrupo']
+    nombreGrupo = request.POST['nombreGrupo']
+    apellidoGrupo = request.POST['apellidoGrupo']
+
+    docente = Grupo.objects.get(idGrupo=idGrupo)
+    docente.nombreGrupo = nombreGrupo
+    docente.apellidoGrupo = apellidoGrupo
+    docente.save()
+
+    return redirect('/grupos')
