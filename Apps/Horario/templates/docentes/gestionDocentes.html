@@ -1,0 +1,61 @@
+{% extends "../base.html" %}
+
+{% block tittle %} Gestion docentes {% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+
+        <h2>Gestión de Docentes</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="/registrarDocente/" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" id="idDocente" name="idDocente" class="form-control" placeholder="Id"
+                            minlength="1" maxlength="6" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="nombreDocente" name="nombreDocente" class="form-control" placeholder="Nombre"
+                            maxlength="50" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="apellidoDocente" name="apellidoDocente" class="form-control" placeholder="Apellidos"
+                            maxlength="50" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <h1>Listado de Docentes</h1>
+        <div class="table-responsive py-2">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th colspan="2">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for d in docentes %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{d.idDocente}}</td>
+                        <td>{{d.nombreDocente}} {{d.apellidoDocente}}</td>
+                        <td><a href="edicionDocente/{{d.idDocente}}" class="btn btn-info">Editar</a></td>
+                        <td><a href="eliminarDocente/{{d.idDocente}}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

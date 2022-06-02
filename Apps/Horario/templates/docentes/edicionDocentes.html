@@ -1,0 +1,34 @@
+{% extends "../base.html" %}
+
+{% block tittle %} Gestion materias {% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <h2>Edición de Docentes</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="/editarDocente/" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" id="idDocente" name="idDocente" value="{{docente.idDocente}}" class="form-control" placeholder="Id"
+                            minlength="1" maxlength="6" readonly required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="nombreDocente" name="nombreDocente" value="{{docente.nombreDocente}}" class="form-control" placeholder="Nombre"
+                            maxlength="50" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="apellidoDocente" name="apellidoDocente" value="{{docente.apellidoDocente}}" class="form-control" placeholder="Apellidos"
+                            maxlength="50" required>
+                    </div>                   
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
