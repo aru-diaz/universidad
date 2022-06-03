@@ -153,6 +153,24 @@ def detalleGrupo(request, idGrupo):
     contador = GrupoMateria.objects.filter(idGrupo=idGrupo).count()
     return render(request, "grupos/detalleGrupo.html", {"grupo":grupo,"alumnos":alumnos,"materias":materias,"grupoMaterias":grupoMaterias,"contador":contador})
 
+def registrarGrupoMateria(request, idGrupo):
+    idMateria = request.POST['idMateria']
+    idGrupo = idGrupo
+
+    try:
+        grupoMateria = GrupoMateria.objects.create(
+            idGrupo=Grupo.objects.get(idGrupo=idGrupo),idMateria=Materia.objects.get(idMateria=idMateria))
+        messages.success(request, '¡Materia registrada!')
+    except IntegrityError:
+        messages.success(request, 'Materia NO registrada!, duplicado de materia en el grupo!')
+        return redirect('../detalleGrupo/'+idGrupo)
+    return redirect('../detalleGrupo/'+idGrupo)
+
+def eliminarGrupoMateria(request, idGrupo, idMateria):
+    grupoMateria = GrupoMateria.objects.get(idGrupo=Grupo.objects.get(idGrupo=idGrupo),idMateria=Materia.objects.get(idMateria=idMateria))
+    grupoMateria.delete()
+    messages.success(request, '¡Materia eliminada eliminado!')
+    return redirect('../../detalleGrupo/'+idGrupo)
 ####################################################################################
 def alumnos(request):
     alumnos = Alumno.objects.all()
@@ -203,3 +221,11 @@ def editarAlumno(request):
         return redirect('/alumnos')          
 
     return redirect('/alumnos')
+
+def detalleAlumno(request, idAlumno):
+    grupo = Grupo.objects.get(idGrupo=idGrupo)    
+    alumnos = Alumno.objects.filter(idGrupo=idGrupo)
+    materias = Materia.objects.all()
+    grupoMaterias = GrupoMateria.objects.filter(idGrupo=idGrupo)
+    contador = GrupoMateria.objects.filter(idGrupo=idGrupo).count()
+    return render(request, "grupos/detalleGrupo.html", {"grupo":grupo,"alumnos":alumnos,"materias":materias,"grupoMaterias":grupoMaterias,"contador":contador})    
