@@ -32,7 +32,7 @@ class Alumno(models.Model):
     idAlumno=models.CharField(primary_key=True,max_length=6)
     nombreAlumno=models.CharField(max_length=50)
     apellidoAlumno=models.CharField(max_length=50)
-    grupoAlumno=models.ForeignKey(Grupo, on_delete=models.SET_NULL,null=True)
+    idGrupo=models.ForeignKey(Grupo, on_delete=models.SET_NULL,null=True)
 
     def __str__(self):
         texto="{0} ({1})"

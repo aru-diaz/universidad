@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Materia, Docente, Grupo
+from .models import Materia, Docente, Grupo, Alumno, GrupoMateria, GrupoMateria
 from django.db import IntegrityError
 from django.contrib import messages
 
@@ -113,13 +113,13 @@ def registrarGrupo(request):
             idGrupo=idGrupo, nombreGrupo=nombreGrupo, idDocente=Docente.objects.get(idDocente=idDocente))
         messages.success(request, '¡Grupo registrado!')
     except IntegrityError:
-        messages.success(request, '¡Grupo NO registrado!, duplicado de id o duplicado de docente')
+        messages.success(request, '¡Grupo NO registrado!, duplicado de id o duplicado de docente!')
         return redirect('/grupos')
     return redirect('/grupos')
 
 def eliminarGrupo(request, idGrupo):
-    docente = Grupo.objects.get(idGrupo=idGrupo)
-    docente.delete()
+    grupo = Grupo.objects.get(idGrupo=idGrupo)
+    grupo.delete()
     messages.success(request, '¡Grupo eliminado!')
     return redirect('/grupos')
 
@@ -144,3 +144,61 @@ def editarGrupo(request):
         return redirect('/grupos')          
 
     return redirect('/grupos')
+
+def detalleGrupo(request, idGrupo):
+    grupos = Grupo.objects.all()
+    docente = Docente.objects.all()
+    alumnos = Alumno.objects.all()
+    materias = Materia.objects.all()
+    return render(request, "grupos/detalleGrupo.html", {"grupos":grupos,"docentes":docentes})
+
+####################################################################################
+def alumnos(request):
+    alumnos = Alumno.objects.all()
+    grupos = Grupo.objects.all()    
+    return render(request, "alumnos/gestionAlumnos.html", {"alumnos":alumnos, "grupos":grupos})
+
+def registrarAlumno(request):
+    idAlumno = request.POST['idAlumno']
+    nombreAlumno = request.POST['nombreAlumno']
+    apellidoAlumno = request.POST['apellidoAlumno']
+    idGrupo = request.POST['idGrupo']
+
+    try:
+        alumno = Alumno.objects.create(
+            idAlumno=idAlumno, nombreAlumno=nombreAlumno, apellidoAlumno=apellidoAlumno, idGrupo=Grupo.objects.get(idGrupo=idGrupo))
+        messages.success(request, '¡Alumno registrado!')
+    except IntegrityError:
+        messages.success(request, '¡Alumno NO registrado!, duplicado de id!')
+        return redirect('/alumnos')
+    return redirect('/alumnos')
+
+def eliminarAlumno(request, idAlumno):
+    alumno = Alumno.objects.get(idAlumno=idAlumno)
+    alumno.delete()
+    messages.success(request, '¡Alumno eliminado!')
+    return redirect('/alumnos')
+
+def edicionAlumno(request, idAlumno):
+    alumno = Alumno.objects.get(idAlumno=idAlumno)
+    grupos = Grupo.objects.all()
+    return render(request, "alumnos/edicionAlumnos.html", {"alumno": alumno, "grupos": grupos})
+
+def editarAlumno(request):
+    idAlumno = request.POST['idAlumno']
+    nombreAlumno = request.POST['nombreAlumno']
+    apellidoAlumno = request.POST['apellidoAlumno']
+    idGrupo = request.POST['idGrupo']
+
+    try:
+        alumno = Alumno.objects.get(idAlumno=idAlumno)
+        alumno.nombreAlumno = nombreAlumno
+        alumno.apellidoAlumno = apellidoAlumno
+        alumno.idGrupo = Grupo.objects.get(idGrupo=idGrupo)
+        alumno.save()
+        messages.success(request, '¡Alumno actualizado!')
+    except IntegrityError:
+        messages.success(request, '¡El alumno no se pudo editar!')
+        return redirect('/alumnos')          
+
+    return redirect('/alumnos')

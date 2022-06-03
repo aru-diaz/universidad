@@ -1,0 +1,71 @@
+{% extends "../base.html" %}
+
+{% block tittle %} Gestion alumnos {% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+
+        <h2>Gestión de Materias</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="/registrarAlumno/" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" id="idAlumno" name="idAlumno" class="form-control" placeholder="Id"
+                            minlength="1" maxlength="6" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="nombreAlumno" name="nombreAlumno" class="form-control" placeholder="Nombre"
+                            maxlength="50" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="apellidoAlumno" name="apellidoAlumno" class="form-control" placeholder="Apellido"
+                            maxlength="50" required>
+                    </div>
+                    <div class="form-group">
+                        <select id="idGrupo" name="idGrupo" class="form-control" required>
+                            <option value="-1" disabled selected>Seleccione un grupo</option>
+                            {% for g in grupos %}                                                                
+                                <option value="{{g.idGrupo}}">{{g.nombreGrupo}}</option>                      
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <h1>Listado de Alumnos</h1>
+        <div class="table-responsive py-2">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Grupo</th>
+                        <th colspan="2">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for a in alumnos %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{a.idAlumno}}</td>
+                        <td>{{a.nombreAlumno}} {{a.apellidoAlumno}}</td>
+                        <td>{{a.idGrupo.nombreGrupo}}</td>
+                        <td><a href="edicionAlumno/{{a.idAlumno}}" class="btn btn-info">Editar</a></td>
+                        <td><a href="eliminarAlumno/{{a.idAlumno}}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
