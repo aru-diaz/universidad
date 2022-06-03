@@ -8,29 +8,30 @@
     <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
 
         
-        <div class="card">
-           
+        <div class="card">           
             <div class="card-header">
-              Grupo:
+              Grupo: {{grupo.nombreGrupo}}
             </div>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item">Docente:</li>
+              <li class="list-group-item">Docente: {{grupo.idDocente.nombreDocente}} {{grupo.idDocente.apellidoDocente}}</li>
             </ul>          
         </div>
         <br><br>
 
-        <h2>Lista de materias</h2>
         <div class="card">
+            <div class="card">           
+                <div class="card-header">
+                    Lista de materias
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% for gm in grupoMaterias %}
+                        <li class="list-group-item"><a href="eliminarGrupo/{{g.idGrupo}}" class="btn btn-danger btnEliminacion">Eliminar</a>  {{gm.idMateria.idMateria}} - {{gm.idMateria.nombreMateria}}</li>
+                    {% endfor %}
+                </ul>          
+            </div>
+            {% if contador < 3 %}
             <div class="card-body">
-                <form action="/registrarGrupo/" method="POST">{% csrf_token %}
-                    <div class="form-group">
-                        <input type="text" id="idGrupo" name="idGrupo" class="form-control" placeholder="Id"
-                            minlength="1" maxlength="6" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" id="nombreGrupo" name="nombreGrupo" class="form-control"
-                            placeholder="Nombre Grupo" maxlength="50" required>
-                    </div>
+                <form action="/registrarGrupo/" method="POST">{% csrf_token %}                   
                     <div class="form-group">
                         <select id="idDocente" name="idDocente" class="form-control" required>
                             <option value="-1" disabled selected>Seleccione un docente</option>
@@ -44,32 +45,26 @@
                     </div>
                 </form>
             </div>
+            {% endif %}
         </div>
     </div>
     <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
-        <h1>Listado de Grupos</h1>
+        <h1>Listado de alumnos</h1>
         <div class="table-responsive py-2">
             <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>Id</th>
-                        <th>Nombre</th>
-                        <th>Docente</th>
-                        <th colspan="3">Opciones</th>
+                        <th>Nombre alumno</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for g in grupos %}
+                    {% for a in alumnos %}
                     <tr>
                         <td>{{forloop.counter}}</td>
-                        <td>{{g.idGrupo}}</td>
-                        <td>{{g.nombreGrupo}}</td>
-                        <td>{{g.idDocente.nombreDocente}} {{g.idDocente.apellidoDocente}}</td>
-                        <td><a href="edicionGrupo/{{g.idGrupo}}" class="btn btn-info">Editar</a></td>
-                        <td><a href="eliminarGrupo/{{g.idGrupo}}" class="btn btn-danger btnEliminacion">Eliminar</a>
-                        </td>
-                        <td><a href="detalleGrupo/{{g.idGrupo}}" class="btn btn-success">Ver detalle</a></td>
+                        <td>{{a.idAlumno}}</td>
+                        <td>{{a.nombreAlumno}} {{a.apellidoAlumno}}</td>                        
                     </tr>
                     {% endfor %}
                 </tbody>

@@ -146,11 +146,12 @@ def editarGrupo(request):
     return redirect('/grupos')
 
 def detalleGrupo(request, idGrupo):
-    grupos = Grupo.objects.all()
-    docente = Docente.objects.all()
-    alumnos = Alumno.objects.all()
+    grupo = Grupo.objects.get(idGrupo=idGrupo)    
+    alumnos = Alumno.objects.filter(idGrupo=idGrupo)
     materias = Materia.objects.all()
-    return render(request, "grupos/detalleGrupo.html", {"grupos":grupos,"docentes":docentes})
+    grupoMaterias = GrupoMateria.objects.filter(idGrupo=idGrupo)
+    contador = GrupoMateria.objects.filter(idGrupo=idGrupo).count()
+    return render(request, "grupos/detalleGrupo.html", {"grupo":grupo,"alumnos":alumnos,"materias":materias,"grupoMaterias":grupoMaterias,"contador":contador})
 
 ####################################################################################
 def alumnos(request):
