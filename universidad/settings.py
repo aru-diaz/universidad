@@ -1,4 +1,4 @@
-
+import os
 
 """
 Django settings for universidad project.
