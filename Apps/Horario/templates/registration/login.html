@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block tittle %} {% endblock %}</title>
+    <title>Iniciar sesion</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
@@ -22,48 +22,37 @@
                 aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarColor01">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/materias">Materias</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/docentes">Docentes</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/grupos">Grupos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/alumnos">Alumnos</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="form-inline">                
-                <a href="salir" class="btn btn-danger btn-lg">Cerrar Sesion</a>
-            </div>
         </div>
     </nav>
 
     <div class="container py-4">
-        {% block body %}
-
-        {% endblock %}
+        <div class="row">
+            <div class="col-md-4 offset-md-4">
+                <h2>Iniciar sesion</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <form  method="POST">{% csrf_token %}
+                            <div class="form-group">
+                                <input type="text" id="username" name="username" class="form-control"
+                                    placeholder="Usuario" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" id="password" name="password" class="form-control"
+                                    placeholder="Contraseña" required>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <footer>
         Proyecto Grupos Materias Ramon Cardenas
     </footer>
-
-    {% if messages %}
-    {% for message in messages %}
-    <script>
-        alert("{{ message }}");
-    </script>
-    {% endfor %}
-    {% endif %}
 
     <script src="{% static 'js/main.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"

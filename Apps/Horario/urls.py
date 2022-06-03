@@ -1,8 +1,11 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 urlpatterns = [
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('salir',views.salir),
     path('',views.inicio),
+    path('inicio',views.inicio),
     path('materias',views.materias),
     path('registrarMateria/', views.registrarMateria),
     path('eliminarMateria/<idMateria>', views.eliminarMateria),
