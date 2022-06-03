@@ -1,26 +1,30 @@
 {% extends "../base.html" %}
 
-{% block tittle %} Gestion materias {% endblock %}
+{% block tittle %} Gestion grupos {% endblock %}
 
 {% block body %}
 
 <div class="row">
     <div class="col-md-4 offset-md-4">
-        <h2>Edición de Materia</h2>
+        <h2>Edición de Grupo</h2>
         <div class="card">
             <div class="card-body">
-                <form action="/editarMateria/" method="POST">{% csrf_token %}
+                <form action="/editarGrupo/" method="POST">{% csrf_token %}
                     <div class="form-group">
-                        <input type="text" id="idMateria" name="idMateria" value="{{materia.idMateria}}" class="form-control" placeholder="Id"
+                        <input type="text" id="idGrupo" name="idGrupo" value="{{grupo.idGrupo}}" class="form-control" placeholder="Id"
                             minlength="1" maxlength="6" readonly required>
                     </div>
                     <div class="form-group">
-                        <input type="text" id="nombreMateria" name="nombreMateria" value="{{materia.nombreMateria}}" class="form-control" placeholder="Nombre"
+                        <input type="text" id="nombreGrupo" name="nombreGrupo" value="{{grupo.nombreGrupo}}" class="form-control" placeholder="Nombre"
                             maxlength="50" required>
                     </div>
                     <div class="form-group">
-                        <input type="text" id="creditosMateria" name="creditosMateria" value="{{materia.creditosMateria}}" class="form-control" min="1" max="2"
-                            value="1" required>
+                        <select type="text" id="idDocente" name="idDocente" class="form-control" required>
+                            <option value="-1" disabled>Seleccione un docente</option>
+                            {% for d in docentes %}                                                                
+                                <option value="{{d.idDocente}}" {% if d.idDocente ==  grupo.idDocente.idDocente %} selected {% endif %}>{{d.nombreDocente}} {{d.apellidoDocente}}</option>                      
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
