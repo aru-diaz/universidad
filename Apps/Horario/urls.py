@@ -32,5 +32,6 @@ urlpatterns = [
     path('eliminarAlumno/<idAlumno>', views.eliminarAlumno),
     path('edicionAlumno/<idAlumno>', views.edicionAlumno),
     path('editarAlumno/', views.editarAlumno),
+    path('detalleAlumno/<idAlumno>/<idGrupo>', views.detalleAlumno),
     
 ]

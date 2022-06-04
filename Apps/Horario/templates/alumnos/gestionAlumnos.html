@@ -48,7 +48,7 @@
                         <th>Id</th>
                         <th>Nombre</th>
                         <th>Grupo</th>
-                        <th colspan="2">Opciones</th>
+                        <th colspan="3">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,6 +60,7 @@
                         <td>{{a.idGrupo.nombreGrupo}}</td>
                         <td><a href="edicionAlumno/{{a.idAlumno}}" class="btn btn-info">Editar</a></td>
                         <td><a href="eliminarAlumno/{{a.idAlumno}}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
+                        <td><a href="detalleAlumno/{{a.idAlumno}}/{{a.idGrupo.idGrupo}}" class="btn btn-success">Ver detalle</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>

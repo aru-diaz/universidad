@@ -255,10 +255,7 @@ def editarAlumno(request):
     return redirect('/alumnos')
 
 @login_required
-def detalleAlumno(request, idAlumno):
-    grupo = Grupo.objects.get(idGrupo=idGrupo)    
-    alumnos = Alumno.objects.filter(idGrupo=idGrupo)
-    materias = Materia.objects.all()
-    grupoMaterias = GrupoMateria.objects.filter(idGrupo=idGrupo)
-    contador = GrupoMateria.objects.filter(idGrupo=idGrupo).count()
-    return render(request, "grupos/detalleGrupo.html", {"grupo":grupo,"alumnos":alumnos,"materias":materias,"grupoMaterias":grupoMaterias,"contador":contador})    
+def detalleAlumno(request, idAlumno, idGrupo):    
+    alumno = Alumno.objects.get(idAlumno=idAlumno)
+    grupoMaterias = GrupoMateria.objects.filter(idGrupo=Grupo.objects.get(idGrupo=idGrupo))    
+    return render(request, "alumnos/detalleAlumno.html", {"alumno":alumno,"grupoMaterias":grupoMaterias})    

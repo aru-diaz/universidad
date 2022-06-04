@@ -5,73 +5,39 @@
 {% block body %}
 
 <div class="row">
-    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-
-        
-        <div class="card">           
+    <div class="col-sm-12 col-md-6 col-lg-5 col-xl-5">
+        <div class="card">
             <div class="card-header">
-              Grupo: {{grupo.nombreGrupo}}
+                Detalles alumno
             </div>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item">Docente: {{grupo.idDocente.nombreDocente}} {{grupo.idDocente.apellidoDocente}}</li>
-            </ul>          
+                <li class="list-group-item">Grupo: {{alumno.idGrupo.nombreGrupo}}</li>
+                <li class="list-group-item">Docente: {{alumno.idGrupo.idDocente.nombreDocente}}
+                    {{alumno.idGrupo.idDocente.apellidoDocente}}</li>
+                <li class="list-group-item">Nombre: {{alumno.nombreAlumno}} {{alumno.apellidoAlumno}}</li>
+            </ul>
         </div>
-        <br><br>
-
-        <div class="card">
-            <div class="card">           
-                <div class="card-header">
-                    Lista de materias
-                </div>
-                <ul class="list-group list-group-flush">
-                    {% for gm in grupoMaterias %}
-                        <li class="list-group-item"><a href="../eliminarGrupoMateria/{{gm.idGrupo.idGrupo}}/{{gm.idMateria.idMateria}}" class="btn btn-danger btnEliminacion">Eliminar</a>  {{gm.idMateria.idMateria}} - {{gm.idMateria.nombreMateria}}</li>
-                    {% endfor %}
-                </ul>          
-            </div>
-            {% if contador < 3 %}
-            <div class="card-body">
-                <form action="/registrarGrupoMateria/{{grupo.idGrupo}}" method="POST">{% csrf_token %}                   
-                    <div class="form-group">
-                        <select id="idMateria" name="idMateria" class="form-control" required>
-                            <option value="-1" disabled selected>Seleccione materia</option>
-                            {% for m in materias %}                                                                
-                                <option value="{{m.idMateria}}">{{m.nombreMateria}}</option>                      
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
-                    </div>
-                </form>
-            </div>
-            {% endif %}
-        </div>
-        <br>
-        <a href="/grupos" class="btn btn-danger btn-lg">Atras</a>
     </div>
-    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
-        <h1>Listado de alumnos</h1>
-        <div class="table-responsive py-2">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Id</th>
-                        <th>Nombre alumno</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for a in alumnos %}
-                    <tr>
-                        <td>{{forloop.counter}}</td>
-                        <td>{{a.idAlumno}}</td>
-                        <td>{{a.nombreAlumno}} {{a.apellidoAlumno}}</td>                        
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+
+    <div class="col-sm-12 col-md-6 col-lg-7 col-xl-7">
+        <div class="card">
+            <div class="card-header">
+                Materias grupo
+            </div>
+            <ul class="list-group list-group-flush">
+                {% for gm in grupoMaterias %}
+                <li class="list-group-item">
+                    {{gm.idMateria.idMateria}} - {{gm.idMateria.nombreMateria}}
+                </li>
+                {% endfor %}
+            </ul>
         </div>
+    </div>
+</div>
+<br><br>
+<div class="row">
+    <div class="bd-example">
+        <a href="/alumnos" class="btn btn-danger btn-lg" role="button">Atras</a>
     </div>
 </div>
 
